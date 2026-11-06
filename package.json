@@ -1,0 +1,48 @@
+{
+  "name": "pleniora-ai-manager-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline-capable Pleniora AI desktop package",
+  "main": "desktop-main.cjs",
+  "scripts": {
+    "dist:windows": "electron-builder --win nsis zip"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.pleniora.ai.manager",
+    "productName": "Pleniora AI",
+    "asar": true,
+    "files": [
+      "desktop-main.cjs",
+      "server.js",
+      "*.html",
+      "*.webmanifest",
+      "css/**/*",
+      "js/**/*",
+      "icons/**/*",
+      "!data/**/*",
+      "!README.txt",
+      "!*.md"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "allowScripts": {
+    "electron": true,
+    "electron-winstaller": true
+  }
+}
