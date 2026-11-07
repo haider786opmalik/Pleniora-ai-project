@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Offline-capable Pleniora AI desktop package",
+  "engines": {
+    "node": ">=20"
+  },
   "main": "desktop-main.cjs",
   "scripts": {
     "dist:windows": "electron-builder --win nsis zip"
@@ -44,5 +47,8 @@
   "allowScripts": {
     "electron": true,
     "electron-winstaller": true
+  },
+  "dependencies": {
+    "nodemailer": "^10.3.1"
   }
 }

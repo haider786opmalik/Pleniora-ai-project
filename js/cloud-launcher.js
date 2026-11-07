@@ -30,11 +30,31 @@
   if(data.businesses[0]&&!data.businesses[0].type)data.businesses[0].type=user.businessType||'General Retail';
   data.currentBusiness??=data.businesses[0].id;data.restaurantTables??=[];data.restaurantOrders??=[];data.shopkeeperOrders??=[];
   localStorage.setItem(KEY,JSON.stringify(data));window.ridaAccount=user;
-  let syncing=Promise.resolve(),timer;
-  async function syncLocal(){if(!online())return;let payload;try{payload=JSON.parse(localStorage.getItem(KEY)||'null')}catch{return}if(!payload)return;syncing=syncing.then(async()=>{try{const res=await fetch('/api/data',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({data:payload})});if(res.status===402){location.href='/account.html';return}if(!res.ok)throw Error((await res.json()).error||'Sync failed');localStorage.removeItem(PENDING);renderStatus(`Synced · ${user.businessName}`)}catch{localStorage.setItem(PENDING,JSON.stringify(payload));renderStatus('Sync pending · your changes are saved on this device.')}});return syncing}
+  let syncing=null,timer;
+  async function syncLocal(){
+   if(!online()||syncing)return syncing;
+   syncing=(async()=>{
+    while(online()){
+     const snapshot=localStorage.getItem(PENDING);if(!snapshot)break;
+     let payload;try{payload=JSON.parse(snapshot)}catch{renderStatus('Local sync copy is unreadable. Download a backup before continuing.');break}
+     renderStatus(`Saved on this device · syncing ${user.businessName}…`);
+     try{
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
+      let res;try{res=await fetch('/api/data',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({data:payload}),signal:controller.signal})}finally{clearTimeout(timeout)}
+      if(res.status===402){renderStatus('Saved on this device · sign in online to renew access and sync.');break}
+      if(!res.ok)throw Error(`Sync failed (${res.status})`);
+      // Clear only the exact snapshot the server accepted. A newer save made
+      // while this request was in flight must remain queued for the next pass.
+      if(localStorage.getItem(PENDING)===snapshot){localStorage.removeItem(PENDING);renderStatus(`Synced · ${user.businessName}`)}
+     }catch(error){renderStatus(online()?'Sync pending · your data is saved on this device; retrying automatically.':'Offline · your data is saved on this device.');break}
+    }
+   })().finally(()=>{syncing=null});
+   return syncing
+  }
   const original=Storage.prototype.setItem;
-  Storage.prototype.setItem=function(k,v){original.call(this,k,v);if(k===KEY){localStorage.setItem(PENDING,v);clearTimeout(timer);timer=setTimeout(()=>{if(online())syncLocal();else renderStatus('Offline mode · changes saved on this device.')},250)}};
-  window.addEventListener('online',syncLocal);window.addEventListener('online',()=>renderStatus(`Connected · syncing ${user.businessName}…`));window.addEventListener('offline',()=>renderStatus('Offline mode · changes saved on this device.'));
+  Storage.prototype.setItem=function(k,v){original.call(this,k,v);if(k===KEY){try{localStorage.setItem(PENDING,v)}catch(error){renderStatus('Could not save the offline sync copy. Download a backup and free device storage.');throw error}clearTimeout(timer);timer=setTimeout(()=>{if(online())syncLocal();else renderStatus('Offline · changes saved on this device.')},500)}};
+  window.addEventListener('online',()=>{renderStatus(`Connected · syncing ${user.businessName}…`);syncLocal()});window.addEventListener('offline',()=>renderStatus('Offline · changes saved on this device.'));
+  window.setInterval(()=>{if(online()&&localStorage.getItem(PENDING))syncLocal()},30000);
   document.body.classList.remove('is-booting');await load('js/app.js');await load('js/advanced.js');
   const activeBusiness=data.businesses.find(b=>b.id===data.currentBusiness),isClothing=/clothing|fabric|fashion|apparel/i.test(activeBusiness?.type||user.businessType||'');const allowed=new Set(user.modules||[]);
   document.getElementById('shopkeeperNav')?.remove();if(isClothing){allowed.add('shopkeeper');allowed.add('shopkeeperManagement')}if(!isClothing){document.getElementById('posModeShopkeeper')?.remove()}
