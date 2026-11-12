@@ -77,6 +77,9 @@ html,body{max-width:100%;overflow-x:clip}
 .product-sale-units{grid-column:1/-1;min-width:0;margin-top:4px;padding:14px;border:1px solid var(--line);border-radius:12px;background:#FBF8FC}.product-sale-units h3{margin:0 0 5px;font-size:14px}.product-sale-units>p{margin:0 0 10px;font-size:11px}.product-sale-unit-row{display:grid;grid-template-columns:1.2fr .8fr 1fr 1fr auto;gap:8px;align-items:end;margin-bottom:8px;padding:10px;border:1px solid #e7e8e7;border-radius:10px;background:#fff}.product-sale-unit-row label{min-width:0;margin:0;color:var(--muted);font-size:10px}.product-sale-unit-row input{width:100%;min-width:0;min-height:34px;padding:7px;border:1px solid var(--line);border-radius:8px;background:#fff}.product-sale-unit-row .btn{min-height:34px;padding:6px 9px}@media(max-width:700px){.product-sale-unit-row{grid-template-columns:repeat(2,minmax(0,1fr))}.product-sale-unit-row .btn{grid-column:1/-1}}
 .closing-report-tools{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin:0 0 16px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#FBF8FC}.closing-report-tools label{display:grid;gap:5px;color:var(--muted);font-size:10px;font-weight:650}.closing-report-tools input{min-height:35px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit}.pos-customer-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:7px}.pos-customer-tools small{min-width:0;color:var(--muted);font-size:10px;overflow-wrap:anywhere}
 .closing-report-tools[hidden]{display:none}
+.shopkeeper-order-grid>.field[hidden],.shopkeeper-order-grid>.field [hidden]{display:none!important}.shopkeeper-step-next{margin-top:6px}.shop-floor-setting{display:grid;grid-template-columns:auto minmax(130px,220px);align-items:center;gap:10px;margin:10px 0;color:var(--muted);font-size:12px}.shop-floor-setting select{min-height:34px;padding:6px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.shopkeeper-floor-choices{display:flex;flex-wrap:wrap;gap:8px}.shopkeeper-floor-choice{min-width:104px}.shopkeeper-floor-choice.active{border-color:var(--accent,#6F12A0);background:linear-gradient(115deg,#6F12A0,#C602A2);color:#fff}
+.shopkeeper-native-select{display:none!important}.shopkeeper-pick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}.shopkeeper-pick-grid[hidden],.shopkeeper-selected[hidden],.shopkeeper-order-items[hidden]{display:none!important}.shopkeeper-pick-card{display:grid;gap:5px;min-height:52px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);text-align:left;cursor:pointer}.shopkeeper-pick-card:hover,.shopkeeper-pick-card.selected{border-color:#6F12A0;box-shadow:0 0 0 2px #6F12A022}.shopkeeper-pick-card small{color:var(--muted);font-size:11px}.shopkeeper-selected{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:7px 0;padding:9px 11px;border:1px solid #e8d8ef;border-radius:9px;background:#fbf5ff}.shopkeeper-order-items{display:grid;gap:6px;width:100%;margin:10px 0}.shopkeeper-order-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:9px}.shopkeeper-order-item span{display:grid;gap:3px}.shopkeeper-order-item small{color:var(--muted)}.shopkeeper-order-item .btn{min-width:34px;padding:5px}
 
 
 /* Urdu shopkeeper management and period reports */
@@ -88,6 +91,20 @@ html,body{max-width:100%;overflow-x:clip}
 .modalbox .shopkeeper-order-grid>.field:has(#skoColor){grid-column:1/-1}
 @media(max-width:900px){.modalbox .shopkeeper-order-grid>.field:has(#skoColor){grid-column:1/-1}}
 @media(max-width:560px){.modalbox .shopkeeper-order-grid>.field:has(#skoColor){grid-column:1}}
+
+/* Keep the floor selector above the shop list and make every floor easy to tap. */
+.modalbox .shopkeeper-order-grid>#skoFloorField,
+.modalbox .shopkeeper-order-grid>.field:has(#skoShop){grid-column:1/-1;width:100%}
+.modalbox .shopkeeper-order-grid>#skoShopSelected,
+.modalbox .shopkeeper-order-grid>#skoShopCards,
+.modalbox .shopkeeper-order-grid>#skoPersonSelected,
+.modalbox .shopkeeper-order-grid>#skoPersonCards,
+.modalbox .shopkeeper-order-grid>#skoProductSelected,
+.modalbox .shopkeeper-order-grid>#skoProductCards,
+.modalbox .shopkeeper-order-grid>#skoOrderItems,
+.modalbox .shopkeeper-order-grid>#skoAddItem{grid-column:1/-1;width:100%}
+.shopkeeper-floor-choices{width:100%;padding:4px 0;align-items:center}
+.shopkeeper-floor-choice{min-width:120px;min-height:40px;padding:8px 16px;border-radius:10px!important;flex:0 0 auto;cursor:pointer;pointer-events:auto;touch-action:manipulation}
 
 :root{--gold:#6F12A0;--gold-dark:#4E0C70;--accent:#C602A2}.btn.primary,.assistant-launch{background:linear-gradient(120deg,var(--gold),var(--accent));border-color:var(--gold)}.btn.primary:hover,.assistant-launch:hover{background:linear-gradient(120deg,var(--gold-dark),var(--accent));border-color:var(--accent)}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline-color:#C602A277}
 

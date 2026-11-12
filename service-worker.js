@@ -1,5 +1,5 @@
-const CACHE='pleniora-ai-shell-v36',ROOT=new URL('./',self.registration.scope);
-const SHELL=['./','app.html','app.html?offline=1','index.html','login.html','account.html','css/style.css','css/market.css','js/cloud-launcher.js','js/app.js','js/advanced.js','js/shopkeeper.js','js/product-fields.js','js/fabric-sales.js','js/fabric-sales.js?v=20261015-shopkeeper-alarm-4','js/daily-reports.js','js/industry.js','js/assistant.js','js/onboarding.js','manifest.webmanifest','offline.webmanifest','icons/rida-180.png','icons/rida-192.png','icons/rida-512.png'].map(path=>new URL(path,ROOT).href);
+const CACHE='pleniora-ai-shell-v37',ROOT=new URL('./',self.registration.scope);
+const SHELL=['./','app.html','app.html?offline=1','index.html','login.html','account.html','css/style.css','css/market.css','js/cloud-launcher.js','js/cloud-launcher.js?v=20261112-v3','js/app.js','js/advanced.js','js/shopkeeper.js','js/product-fields.js','js/fabric-sales.js','js/fabric-sales.js?v=20261112-shopkeeper-step-v3','js/daily-reports.js','js/industry.js','js/assistant.js','js/onboarding.js','manifest.webmanifest','offline.webmanifest','icons/rida-180.png','icons/rida-192.png','icons/rida-512.png'].map(path=>new URL(path,ROOT).href);
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
