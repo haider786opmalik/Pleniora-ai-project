@@ -1,4 +1,4 @@
-const OFFLINE_APP=new URLSearchParams(location.search).get("offline")==="1";
+const OFFLINE_APP=new URLSearchParams(location.search).get("offline")==="1"||window.RIDA_OFFLINE_MODE===true||window.Capacitor?.isNativePlatform?.();
 const KEY=OFFLINE_APP?"rida_fabrics_offline_v1":"rida_fabrics_pro_v3";
 const DEFAULT_PERMS=["dashboard","products:view","products:add","products:edit","products:delete","categories","units","purchases:view","purchases:add","suppliers","sales:view","sales:add","sales:void","customers","employees","expenses:view","expenses:add","expenses:delete","reports","settings","pos","restaurant","inventory","ledgers","cash","returns","alerts","activity","shopkeeper","shopkeeperManagement"];
 const DEFAULT_DB={
