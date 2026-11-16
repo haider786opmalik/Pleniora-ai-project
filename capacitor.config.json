@@ -1,0 +1,8 @@
+{
+  "appId": "com.pleniora.ai.manager",
+  "appName": "Pleniora AI",
+  "webDir": "mobile-web",
+  "ios": {
+    "contentInset": "automatic"
+  }
+}

@@ -4,3 +4,5 @@ data/
 *.log
 dist/
 release/
+
+mobile-web/
