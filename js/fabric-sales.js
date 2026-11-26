@@ -3,7 +3,7 @@
   const clothing=()=>/clothing|fabric|fashion|apparel/i.test(B()?.type||'');
   const clothingUnits=['Piece','Gaz','Shalwar','Suit','Thaan'];
   if(clothing()){
-    if(JSON.stringify(db.units)!==JSON.stringify(clothingUnits))db.units=clothingUnits.slice();
+    if(!activeList("units").length)activeList("units").push(...clothingUnits);
     let migrated=false;
     arr('products').filter(p=>p.businessId===biz()).forEach(p=>{if(p.customerSale==null){p.customerSale=+p.sale||0;migrated=true}if(p.shopkeeperSale==null){p.shopkeeperSale=+p.sale||0;migrated=true}});
     if(migrated)save();
