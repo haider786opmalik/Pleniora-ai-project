@@ -57,7 +57,7 @@
   window.setInterval(()=>{if(online()&&localStorage.getItem(PENDING))syncLocal()},30000);
   document.body.classList.remove('is-booting');await load('js/app.js');await load('js/advanced.js');
   const activeBusiness=data.businesses.find(b=>b.id===data.currentBusiness),isClothing=/clothing|fabric|fashion|apparel/i.test(activeBusiness?.type||user.businessType||'');const allowed=new Set(user.modules||[]);
-  document.getElementById('shopkeeperNav')?.remove();if(isClothing){allowed.add('shopkeeper');allowed.add('shopkeeperManagement')}if(!isClothing){document.getElementById('posModeShopkeeper')?.remove()}
+  document.getElementById('shopkeeperNav')?.remove();if(isClothing){allowed.add('shopkeeper');allowed.add('shopkeeperManagement');allowed.add('shopkeeperLedger')}if(!isClothing){document.getElementById('posModeShopkeeper')?.remove()}
   document.querySelectorAll('#mainNav button[data-page]').forEach(button=>{if(!allowed.has(button.dataset.page))button.remove()});
   const originalShow=window.showPage;window.showPage=page=>{if(!allowed.has(page)){window.toast?.('This module is not enabled for this account.');return}return originalShow(page)};
   window.logout=async()=>{if(online())await fetch('/api/logout',{method:'POST'});localStorage.removeItem(PROFILE);location.href='/login.html'};window.login=()=>location.href='/login.html';
